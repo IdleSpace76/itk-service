@@ -71,4 +71,15 @@ public class ApiExceptionHandler {
                         .path(req.getRequestURI())
                         .build());
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiErrorResponse> handleAny(Exception ex, HttpServletRequest req) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiErrorResponse.builder()
+                        .error("INTERNAL_ERROR")
+                        .message("Внутренняя ошибка сервера")
+                        .timestamp(Instant.now())
+                        .path(req.getRequestURI())
+                        .build());
+    }
 }
